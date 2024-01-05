@@ -1,0 +1,467 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+import plus from "../assets/plus.png";
+import { useAuthUser } from "react-auth-kit";
+import { useNavigate } from "react-router-dom";
+// Define the areRowsEqual function
+function areRowsEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    const row1 = arr1[i];
+    const row2 = arr2[i];
+
+    if (JSON.stringify(row1) !== JSON.stringify(row2)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+const AddPr = () => {
+  const auth = useAuthUser();
+  const navigate = useNavigate();
+  const baseUrl = "http://127.0.0.1:8000";
+  const [formData, setFormData] = useState({
+    office: "",
+    purpose: "",
+    source_of_fund: "",
+    Requested_by: "",
+    Desig_Req: "",
+    Recommending: "",
+    Desig_Reco: "",
+    Approved_By: "",
+    Desig_Appr: "",
+    unit: "",
+    item_name: "",
+    item_description: [""],
+    item_quantity: 0,
+    unit_cost: 0,
+    total: 0,
+  });
+
+  // State for managing rows dynamically
+  const [rows, setRows] = useState([
+    {
+      unit: "",
+      item_name: "",
+      item_description: [""],
+      item_quantity: 0,
+      unit_cost: 0,
+      total: 0,
+    },
+  ]);
+
+  const addDescription = (index) => {
+    setRows((prevRows) => {
+      const updatedRows = [...prevRows];
+      updatedRows[index].item_description.push("");
+      return updatedRows;
+    });
+  };
+
+  // Function to add a new row
+  const addRow = () => {
+    setRows((prevRows) => {
+      const newRow = {
+        unit: "",
+        item_name: "",
+        item_description: [""],
+        item_quantity: 0,
+        unit_cost: 0,
+        total: 0,
+      };
+      return [...prevRows, newRow];
+    });
+  };
+
+  //function for submitting the pr to the backend
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Serialize descriptions as JSON strings
+    const formattedRows = rows.map((row) => ({
+      ...row,
+      item_description: JSON.stringify(row.item_description),
+    }));
+
+    const requestData = {
+      office: auth().office,
+      purpose: formData.purpose,
+      source_of_fund: formData.source_of_fund,
+      Requested_by: formData.Requested_by,
+      Desig_Req: formData.Desig_Req,
+      Recommending: formData.Recommending,
+      Desig_Reco: formData.Desig_Reco,
+      Approved_By: formData.Approved_By,
+      Desig_Appr: formData.Desig_Appr,
+      items: formattedRows,
+    };
+
+    console.log(requestData);
+
+    try {
+      const response = await axios.post(
+        `${baseUrl}/pr/create-pr/`,
+        requestData
+      );
+
+      if (response.status === 200) {
+        console.log(
+          "Procurement Request Added Successfully: ",
+          response.data.message
+        );
+        alert("Procurement Requests Added Successfully");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error adding PR:", error.message);
+    }
+  };
+
+  // Function to update a row's data
+  const updateRowData = (index, field, value) => {
+    setRows((prevRows) => {
+      const updatedRows = [...prevRows];
+      updatedRows[index][field] =
+        field === "item_quantity" || field === "unit_cost"
+          ? parseFloat(value) // Ensure value is a valid number
+          : value;
+      return updatedRows;
+    });
+  };
+
+  useEffect(() => {
+    // Calculate total whenever quantity or unit_cost changes
+    const updatedRows = rows.map((row, index) => {
+      const { item_quantity, unit_cost } = row;
+      const total = item_quantity * unit_cost;
+      return { ...row, total };
+    });
+
+    // Check if the updatedRows are different from the current rows before updating state
+    if (!areRowsEqual(updatedRows, rows)) {
+      setRows(updatedRows);
+    }
+  }, [rows]);
+
+  return (
+    <div className="overflow-hidden">
+      <div className="text-xl font-bold text-text_color drop-shadow-md">
+        ADD PROCUREMENT REQUEST
+      </div>
+
+      <div className="p-5 shadow-lg rounded-xl">
+        <form onSubmit={handleSubmit} className="flex flex-col">
+          <div className="flex">
+            <div className="w-full mb-5">
+              <label htmlFor="source_of_fund" className="font-semibold">
+                Source of Fund:
+              </label>
+              <input
+                className="w-[60%] p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                placeholder="e.g Local GIA - STORRM"
+                required
+                type="text"
+                id="source_of_fund"
+                name="source_of_fund"
+                value={formData.source_of_fund}
+                onChange={(e) => {
+                  setFormData({ ...formData, source_of_fund: e.target.value });
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="flex">
+            <div className="w-full mb-5">
+              <label htmlFor="purpose" className="font-semibold">
+                Purpose:
+              </label>
+              <input
+                className="w-[87%] p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                placeholder="Purpose of the PR"
+                required
+                type="text"
+                id="purpose"
+                name="purpose"
+                value={formData.purpose}
+                onChange={(e) => {
+                  setFormData({ ...formData, purpose: e.target.value });
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="w-full flex  mb-5">
+            <div className="w-full">
+              <label htmlFor="Requested_by" className="font-semibold">
+                Requested By:
+              </label>
+              <input
+                className="w-[30%] p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                placeholder="Name of Requestor"
+                required
+                type="text"
+                id="Requested_by"
+                name="Requested_by"
+                value={formData.Requested_by}
+                onChange={(e) => {
+                  setFormData({ ...formData, Requested_by: e.target.value });
+                }}
+              />
+
+              <label htmlFor="Desig_Req" className="font-semibold ml-5">
+                Designation:
+              </label>
+              <input
+                className="w-[40%] p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                placeholder="Designation of the Requisitioner "
+                required
+                type="text"
+                id="Desig_Req"
+                name="Desig_Req"
+                value={formData.Desig_Req}
+                onChange={(e) => {
+                  setFormData({ ...formData, Desig_Req: e.target.value });
+                }}
+              />
+            </div>
+          </div>
+          <div className="w-full flex mb-5">
+            <div className="w-full">
+              <label htmlFor="Recommending" className="font-semibold">
+                Recommending:
+              </label>
+              <input
+                className="w-[30%] p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                placeholder="Name of Recommending Approval"
+                required
+                type="text"
+                id="Recommending"
+                name="Recommending"
+                value={formData.Recommending}
+                onChange={(e) => {
+                  setFormData({ ...formData, Recommending: e.target.value });
+                }}
+              />
+
+              <label htmlFor="Desig_Reco" className="font-semibold ml-5">
+                Designation:
+              </label>
+              <input
+                className="w-[40%] p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                placeholder="Designation of the Recommending Approval"
+                required
+                type="text"
+                id="Desig_Reco"
+                name="Desig_Reco"
+                value={formData.Desig_Reco}
+                onChange={(e) => {
+                  setFormData({ ...formData, Desig_Reco: e.target.value });
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="w-fullflex mb-5">
+            <div className="w-full">
+              <label htmlFor="Approved_By" className="font-semibold">
+                Approved By:
+              </label>
+              <input
+                className="w-[30%] p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                placeholder="Name of Approval"
+                required
+                type="text"
+                id="Approved_By"
+                name="Approved_By"
+                value={formData.Approved_By}
+                onChange={(e) => {
+                  setFormData({ ...formData, Approved_By: e.target.value });
+                }}
+              />
+
+              <label htmlFor="Desig_Appr" className="font-semibold ml-5">
+                Designation:
+              </label>
+              <input
+                className="w-[40%] p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                placeholder="Designation of the Approved by"
+                required
+                type="text"
+                id="Desig_Appr"
+                name="Desig_Appr"
+                value={formData.Desig_Appr}
+                onChange={(e) => {
+                  setFormData({ ...formData, Desig_Appr: e.target.value });
+                }}
+              />
+            </div>
+          </div>
+
+          <table className="w-full text-md text-left rounded-full mt-5">
+            <thead className="text-sm bg-blue-300 font-semibold">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Unit
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Item Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Item Description
+                </th>
+                <th scope="col" className="px-6 py-3 w-32">
+                  Quantity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Unit Cost
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Total
+                </th>
+              </tr>
+            </thead>
+            <tbody className="overflow-hidden">
+              {rows.map((row, index) => (
+                <tr key={index} className="bg-white border-b">
+                  <td className="px-6 py-4 border-2 border-blue-200">
+                    <input
+                      className="w-full p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                      type="text"
+                      name="unit"
+                      value={row.unit}
+                      onChange={(e) =>
+                        updateRowData(index, "unit", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td className="px-6 py-4 border-2 border-blue-200">
+                    <input
+                      className="w-full p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                      type="text"
+                      name="item_name"
+                      value={row.item_name}
+                      onChange={(e) =>
+                        updateRowData(index, "item_name", e.target.value)
+                      }
+                    />
+                  </td>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 border-2 border-blue-200 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {row.item_description.map((desc, descIndex) => (
+                      <div key={descIndex}>
+                        <input
+                          className="w-full p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                          type="text"
+                          name={`description-${index}-${descIndex}`}
+                          value={desc}
+                          onChange={(e) => {
+                            const newDescriptions = [...row.item_description];
+                            newDescriptions[descIndex] = e.target.value;
+                            updateRowData(
+                              index,
+                              "item_description",
+                              newDescriptions
+                            );
+                          }}
+                        />
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => addDescription(index)}
+                      className="w-full drop-shadow-xl text-lg hover:bg-blue-100 duration-100 rounded-lg"
+                    >
+                      <img
+                        src={plus}
+                        alt="plus_icon"
+                        width={20}
+                        height={20}
+                        style={{
+                          display: "block",
+                          margin: "auto",
+                          marginTop: "10px",
+                        }}
+                      />
+                    </button>
+                  </th>
+                  <td className="px-6 py-4 border-2 border-blue-200">
+                    <input
+                      className="w-full p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                      type="number"
+                      name="item_quantity"
+                      value={row.item_quantity}
+                      onChange={(e) =>
+                        updateRowData(index, "item_quantity", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td className="px-6 py-4 border-2 border-blue-200">
+                    <div className="flex">
+                      <div className="place-self-center">PHP</div>
+                      <input
+                        className="w-full p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                        type="number"
+                        name="unit_cost"
+                        value={row.unit_cost}
+                        onChange={(e) =>
+                          updateRowData(index, "unit_cost", e.target.value)
+                        }
+                      />
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 border-2 border-blue-200">
+                    <div className="flex">
+                      <div className="place-self-center">PHP</div>
+                      <input
+                        className="w-full p-2.5 ml-2 placeholder-slate-500 focus:outline-none bg-gray-100 text-black text-md rounded-lg drop-shadow-lg"
+                        type="number"
+                        name="total"
+                        value={row.total}
+                        readOnly
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <button
+            type="button"
+            onClick={addRow}
+            className="w-full drop-shadow-xl text-lg hover:bg-blue-100 duration-100 rounded-lg"
+            style={{ textAlign: "center" }}
+          >
+            <img
+              src={plus}
+              alt="plus_icon"
+              width={30}
+              height={30}
+              style={{
+                display: "block",
+                margin: "auto",
+                marginTop: "10px",
+              }}
+            />
+          </button>
+          <br />
+          <input
+            type="submit"
+            value="Submit"
+            className="place-self-end text-lg text-center drop-shadow-2xl w-52 p-3 bg-blue-300 shadow-lg rounded-full mb-5 hover:scale-110 duration-100"
+          />
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default AddPr;

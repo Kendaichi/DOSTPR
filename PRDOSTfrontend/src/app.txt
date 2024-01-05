@@ -1,0 +1,25 @@
+import Nav from "./components/Nav";
+import AddPr from "./components/Add_PR";
+import GetPr from "./components/Get_PR";
+import PRDetails from "./components/Pr_Details";
+import { SignIn } from "@clerk/clerk-react";
+import { Routes, Route } from "react-router-dom";
+
+function App() {
+  return (
+    // <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
+    <div className="">
+      <Nav />
+      <div className="w-full pt-10 p-16 h-screen">
+        <Routes>
+          <Route path="/" exact element={<GetPr />} />
+          <Route path="/pr-add" element={<AddPr />} />
+          <Route path="/pr-details/:id" element={<PRDetails />} />
+          {/* <Route path="/pdf-view" element={<PDF />} /> */}
+        </Routes>
+      </div>
+    </div>
+  );
+}
+
+export default App;

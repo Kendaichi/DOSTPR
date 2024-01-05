@@ -1,0 +1,930 @@
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Font,
+} from "@react-pdf/renderer";
+import React from "react";
+
+const styles = StyleSheet.create({
+  body: {
+    paddingTop: 35,
+    paddingBottom: 65,
+    paddingHorizontal: 35,
+  },
+  text: {
+    fontSize: 8,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    margin: 2,
+  },
+  header: {
+    fontWeight: 700,
+    fontSize: 10,
+    marginBottom: 10,
+    textAlign: "center",
+    color: "black",
+    fontFamily: "Times-Roman",
+  },
+  pageNumber: {
+    position: "absolute",
+    fontSize: 8,
+    bottom: 30,
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    color: "grey",
+  },
+
+  containerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  columnContainer: {
+    flexDirection: "column",
+    width: 280,
+  },
+
+  checkbox: {
+    borderStyle: "solid",
+    borderWidth: 1,
+  },
+
+  div: {
+    // borderStyle: "solid",
+    // borderWidth: 1,
+    fontFamily: "Times-Roman",
+    fontSize: 10,
+    padding: 2,
+  },
+
+  table: {
+    display: "table",
+    width: "auto",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 0,
+  },
+  tableRow: {
+    flexDirection: "row",
+  },
+  tableHeader: {
+    width: 200,
+    padding: 2,
+    height: 20,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    fontFamily: "Times-Roman",
+    fontSize: 10,
+  },
+  tableCell: {
+    width: 200,
+    padding: 4,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    fontFamily: "Times-Roman",
+    fontSize: 10,
+  },
+  purpose: {
+    width: 1000,
+  },
+});
+
+// const calculateWidth = (supplierNum) => {
+//   const totalWidth = 350;
+//   const widthPerSupplier = totalWidth / supplierNum;
+//   return widthPerSupplier;
+// };
+
+const POfile = ({ items, winner, address, PODetails }) => (
+  <Document>
+    <Page style={styles.body}>
+      <Text style={[styles.header]}>PURCHASE ORDER</Text>
+
+      <Text style={[styles.header, { marginBottom: 0 }]}>
+        DEPARTMENT OF SCIENCE AND TECHNOLOGY
+      </Text>
+
+      <Text style={styles.header}>CSU Campus Ampayon, Butuan City, 8600</Text>
+
+      <View style={[styles.table, { marginBottom: 25 }]}>
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 80, textAlign: "center", borderRight: 0 },
+            ]}
+          >
+            Supplier:
+          </Text>
+
+          <Text style={[styles.tableCell, { width: 250, textAlign: "left" }]}>
+            {winner}
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 80, textAlign: "center", borderRight: 0 },
+            ]}
+          >
+            P.O. No. :
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 150, textAlign: "center", borderRight: 0 },
+            ]}
+          >
+            PO Number
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 80, textAlign: "center", borderRight: 0 },
+            ]}
+          >
+            Address:
+          </Text>
+
+          <Text style={[styles.tableCell, { width: 250, textAlign: "left" }]}>
+            {address}
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 80, textAlign: "center", borderRight: 0 },
+            ]}
+          >
+            Date:
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 150, textAlign: "center", borderRight: 0 },
+            ]}
+          >
+            Date Here
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 80, textAlign: "center", borderRight: 0 },
+            ]}
+          >
+            TIN:
+          </Text>
+
+          <Text style={[styles.tableCell, { width: 250, textAlign: "left" }]}>
+            Supplier's Tin Number
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 230, textAlign: "left", borderRight: 0 },
+            ]}
+          >
+            Mode of Procurement:
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 80,
+                textAlign: "center",
+                borderBottom: 0,
+                borderRight: 0,
+              },
+            ]}
+          >
+            Gentlemen:
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 250,
+                textAlign: "center",
+                borderBottom: 0,
+                borderRight: 0,
+              },
+            ]}
+          ></Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "center",
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          >
+            {PODetails.mode_of_procurement}
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 560, textAlign: "left", borderRight: 0, fontSize: 8 },
+            ]}
+          >
+            Please furnish this Office of the following articles to the terms
+            and conditions contained herein:
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text style={[styles.tableCell, { width: 330, textAlign: "left" }]}>
+            Place of Delivery: {PODetails.place_of_delivery}
+          </Text>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 230, textAlign: "left", borderRight: 0 },
+            ]}
+          >
+            Delivery Term: {PODetails.delivery_term}
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text style={[styles.tableCell, { width: 330, textAlign: "left" }]}>
+            Date of Delivery: {PODetails.date_of_delivery}
+          </Text>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 230, textAlign: "left", borderRight: 0 },
+            ]}
+          >
+            Payment Term: {PODetails.payment_term}
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text style={[styles.tableCell, { width: 80, textAlign: "center" }]}>
+            Stock/Property No.
+          </Text>
+          <Text style={[styles.tableCell, { width: 40, textAlign: "center" }]}>
+            Unit
+          </Text>
+          <Text style={[styles.tableCell, { width: 210, textAlign: "center" }]}>
+            Description
+          </Text>
+          <Text style={[styles.tableCell, { width: 50, textAlign: "center" }]}>
+            QTY
+          </Text>
+          <Text style={[styles.tableCell, { width: 90, textAlign: "center" }]}>
+            Unit Cost
+          </Text>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 90, textAlign: "center", borderRight: 0 },
+            ]}
+          >
+            Amount
+          </Text>
+        </View>
+
+        {/* Items Here */}
+
+        {items.map((item, index) => (
+          <React.Fragment key={`item # ${index}`}>
+            <View style={styles.tableRow}>
+              <Text
+                style={[styles.tableCell, { width: 80, textAlign: "center" }]}
+              ></Text>
+              <Text
+                style={[styles.tableCell, { width: 40, textAlign: "center" }]}
+              >
+                {item.unit}
+              </Text>
+              <Text
+                style={[styles.tableCell, { width: 210, textAlign: "center" }]}
+              >
+                {item.item_name}
+              </Text>
+              <Text
+                style={[styles.tableCell, { width: 50, textAlign: "center" }]}
+              >
+                {item.item_quantity}
+              </Text>
+              <Text
+                style={[styles.tableCell, { width: 90, textAlign: "center" }]}
+              >
+                PHP {item.price}
+              </Text>
+              <Text
+                style={[
+                  styles.tableCell,
+                  { width: 90, textAlign: "center", borderRight: 0 },
+                ]}
+              >
+                PHP
+              </Text>
+            </View>
+
+            {JSON.parse(item?.item_description).map((desc, descIndex) => (
+              <View
+                style={styles.tableRow}
+                key={`item ${index} - des ${descIndex}`}
+              >
+                <Text
+                  style={[styles.tableCell, { width: 80, textAlign: "center" }]}
+                ></Text>
+                <Text
+                  style={[styles.tableCell, { width: 40, textAlign: "center" }]}
+                ></Text>
+                <Text
+                  style={[
+                    styles.tableCell,
+                    { width: 210, textAlign: "center" },
+                  ]}
+                >
+                  {desc}
+                </Text>
+                <Text
+                  style={[styles.tableCell, { width: 50, textAlign: "center" }]}
+                ></Text>
+                <Text
+                  style={[styles.tableCell, { width: 90, textAlign: "center" }]}
+                ></Text>
+                <Text
+                  style={[
+                    styles.tableCell,
+                    { width: 90, textAlign: "center", borderRight: 0 },
+                  ]}
+                ></Text>
+              </View>
+            ))}
+          </React.Fragment>
+        ))}
+
+        {/* Items End Here */}
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 80, height: 15, textAlign: "center" },
+            ]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 40, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 210, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 50, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 90, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 90, textAlign: "center", borderRight: 0 },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 80, height: 15, textAlign: "center" },
+            ]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 40, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 210, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 50, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 90, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 90, textAlign: "center", borderRight: 0 },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[styles.tableCell, { width: 80, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 40, textAlign: "center" }]}
+          ></Text>
+          <Text style={[styles.tableCell, { width: 210, textAlign: "left" }]}>
+            Purpose: Meals and snacks during the CY 2023 1st QUarter Management
+            Committee Meeting on Januray 12-13, 2023 in Butuanc City
+          </Text>
+          <Text
+            style={[styles.tableCell, { width: 50, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 90, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 90, textAlign: "center", borderRight: 0 },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[styles.tableCell, { width: 80, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 40, textAlign: "center" }]}
+          ></Text>
+          <Text style={[styles.tableCell, { width: 210, textAlign: "left" }]}>
+            PR#: 2023-01-001 (sample)
+          </Text>
+          <Text
+            style={[styles.tableCell, { width: 50, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 90, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 90, textAlign: "center", borderRight: 0 },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 120, textAlign: "center", fontSize: 8 },
+            ]}
+          >
+            (Total AMount in Words)
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 350, textAlign: "left", fontSize: 12 },
+            ]}
+          >
+            TOTAL MONEY IN WORDS
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              { width: 90, textAlign: "center", borderRight: 0 },
+            ]}
+          >
+            PHP
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 560,
+                textAlign: "center",
+                fontSize: 8,
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 560,
+                textAlign: "center",
+                fontSize: 7,
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          >
+            In case of fialure to make the full delivery within the time
+            specified above, a penalty of one-tenth(1/10) of one percent for
+            every day of delay shall be imposed on the undelivered item/s.
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 560,
+                textAlign: "center",
+                fontSize: 8,
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 120,
+                textAlign: "center",
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          >
+            Conforme:
+          </Text>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 210,
+                textAlign: "center",
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          ></Text>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 140,
+                textAlign: "left",
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          >
+            Very Truly Yours,
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 90,
+                textAlign: "center",
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={[styles.tableRow, { marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 330,
+                textAlign: "center",
+                borderRight: 0,
+                borderBottom: 0,
+                textDecoration: "underline",
+                paddingBottom: 0,
+              },
+            ]}
+          >
+            SUPPLIERS'S NAME
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "center",
+                borderRight: 0,
+                borderBottom: 0,
+                paddingBottom: 0,
+                textDecoration: "underline",
+              },
+            ]}
+          >
+            ENGR. NOEL M. AJOC
+          </Text>
+        </View>
+
+        <View style={[styles.tableRow, { marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 330,
+                textAlign: "center",
+                borderRight: 0,
+                borderBottom: 0,
+                padding: 0,
+                fontSize: 8,
+              },
+            ]}
+          >
+            Signature over Printed name of Supplier
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "center",
+                borderRight: 0,
+                borderBottom: 0,
+                fontSize: 8,
+                padding: 0,
+              },
+            ]}
+          >
+            Regional Director
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 560,
+                textAlign: "center",
+                fontSize: 8,
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 560,
+                height: 15,
+                textAlign: "center",
+                fontSize: 8,
+                borderRight: 0,
+                borderBottom: 1,
+              },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={[styles.tableRow, { marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 330,
+                height: 20,
+                textAlign: "center",
+                borderRight: 1,
+                borderBottom: 0,
+              },
+            ]}
+          ></Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "center",
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={[styles.tableRow, { marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 330,
+                textAlign: "left",
+                borderRight: 1,
+                borderBottom: 0,
+              },
+            ]}
+          >
+            Fund Cluster: _________________________
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "left",
+                borderRight: 0,
+                borderBottom: 1,
+              },
+            ]}
+          >
+            ORS/BURS No. :
+          </Text>
+        </View>
+
+        <View style={[styles.tableRow, { marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 330,
+                textAlign: "left",
+                borderRight: 1,
+                borderBottom: 0,
+              },
+            ]}
+          >
+            Funds Available: _________________________
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "left",
+                borderRight: 0,
+                borderBottom: 1,
+              },
+            ]}
+          >
+            Date of the ORS/BURS:
+          </Text>
+        </View>
+
+        <View style={[styles.tableRow, { marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 330,
+                textAlign: "left",
+                borderRight: 1,
+                borderBottom: 0,
+              },
+            ]}
+          ></Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "left",
+                borderRight: 0,
+                borderBottom: 1,
+              },
+            ]}
+          >
+            Amount:
+          </Text>
+        </View>
+
+        <View style={[styles.tableRow, { marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 330,
+                textAlign: "center",
+                borderRight: 1,
+                borderBottom: 0,
+                textDecoration: "underline",
+                paddingBottom: 0,
+              },
+            ]}
+          >
+            MAYETTE M. CARLON
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "left",
+                borderRight: 0,
+                borderBottom: 0,
+              },
+            ]}
+          ></Text>
+        </View>
+        <View style={[styles.tableRow, { marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 330,
+                textAlign: "center",
+                borderRight: 1,
+                borderBottom: 0,
+                padding: 0,
+                fontSize: 8,
+              },
+            ]}
+          >
+            Accountant III
+          </Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "left",
+                borderRight: 0,
+                borderBottom: 0,
+                padding: 0,
+              },
+            ]}
+          ></Text>
+        </View>
+
+        <View style={[styles.tableRow, { marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 330,
+                textAlign: "left",
+                borderRight: 1,
+                borderBottom: 1,
+              },
+            ]}
+          ></Text>
+
+          <Text
+            style={[
+              styles.tableCell,
+              {
+                width: 230,
+                textAlign: "left",
+                borderRight: 0,
+                borderBottom: 1,
+              },
+            ]}
+          ></Text>
+        </View>
+      </View>
+    </Page>
+  </Document>
+);
+
+export default POfile;

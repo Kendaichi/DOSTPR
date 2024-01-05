@@ -1,0 +1,326 @@
+const Quixote = () => (
+  <Document>
+    <Page style={styles.body}>
+      <Text style={styles.header}>PURCHASE REQUESTS</Text>
+      
+      <View style={styles.containerRow}>
+        <Text style={styles.text}>
+          Entity Name: DEPARTMENT OF SCIENCE AND TECHNOLOGY
+        </Text>
+        <Text style={styles.text}>Fund Cluster: ________</Text>
+      </View>
+      
+      <View style={styles.table}>
+        <View style={styles.tableRow}>
+          <Text style={[styles.tableHeader, { height: 40, width: 150 }]}>
+            Office Section: Office
+          </Text>
+          <View style={[styles.columnContainer]}>
+            <Text
+              style={[styles.tableHeader, { borderBottomWidth: 0, width: 254 }]}
+            >
+              PR No.: _____________
+            </Text>
+            <Text
+              style={[styles.tableHeader, { borderTopWidth: 0, width: 254 }]}
+            >
+              Responsibility Center Code: _______
+            </Text>
+          </View>
+          <Text
+            style={[
+              styles.tableHeader,
+              { height: 40, width: 150, borderRightWidth: 0 },
+            ]}
+          >
+            Date: __________________
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text style={[styles.tableCell, { width: 200, textAlign: "center" }]}>
+            Stock/Property No.
+          </Text>
+          <Text style={[styles.tableCell, { width: 184, textAlign: "center" }]}>
+            Unit
+          </Text>
+          <Text style={[styles.tableCell, { textAlign: "center", width: 530 }]}>
+            Item Description
+          </Text>
+          <Text style={[styles.tableCell, { textAlign: "center", width: 189 }]}>
+            Quantity
+          </Text>
+          <Text style={[styles.tableCell, { textAlign: "center", width: 180 }]}>
+            Unit Cost
+          </Text>
+          <Text
+            style={[
+              styles.tableCell,
+              { textAlign: "center", width: 200, borderRightWidth: 0 },
+            ]}
+          >
+            Total Cost
+          </Text>
+        </View>
+
+       
+          <View style={styles.tableRow}>
+            <Text
+              style={[styles.tableCell, { width: 200, textAlign: "center" }]}
+            ></Text>
+            <Text
+              style={[styles.tableCell, { width: 184, textAlign: "center" }]}
+            >
+             
+            </Text>
+            <View
+              style={[styles.tableCell, { textAlign: "center", width: 530 }]}
+            >
+              <Text>Item Name</Text>
+             
+                <Text style={[{ marginTop: 5 }]}>
+                
+                </Text>
+         
+            </View>
+
+            <Text
+              style={[styles.tableCell, { textAlign: "center", width: 189 }]}
+            >
+           
+            </Text>
+            <Text
+              style={[styles.tableCell, { textAlign: "center", width: 180 }]}
+            >
+             
+            </Text>
+            <Text
+              style={[
+                styles.tableCell,
+                { textAlign: "center", width: 200, borderRightWidth: 0 },
+              ]}
+            >
+           
+            </Text>
+          </View>
+   
+
+        {/* Display the totalSum */}
+        <View style={styles.tableRow}>
+          <Text
+            style={[styles.tableCell, { width: 200, textAlign: "center" }]}
+          ></Text>
+          <Text
+            style={[styles.tableCell, { width: 184, textAlign: "center" }]}
+          ></Text>
+          <View
+            style={[styles.tableCell, { textAlign: "center", width: 530 }]}
+          ></View>
+          <Text
+            style={[styles.tableCell, { textAlign: "center", width: 189 }]}
+          ></Text>
+          <Text style={[styles.tableCell, { textAlign: "center", width: 180 }]}>
+            TOTAL
+          </Text>
+          <Text
+            style={[
+              styles.tableCell,
+              { textAlign: "center", width: 200, borderRightWidth: 0 },
+            ]}
+          >
+            PHP Total
+          </Text>
+        </View>
+
+        <View style={styles.tableRow}>
+          <View
+            style={[
+              styles.tableCell,
+              { height: 50, width: 1000, borderRightWidth: 0 },
+            ]}
+          >
+            <Text style={styles.text}>Purpose:purpose</Text>
+            <Text style={styles.text}>
+              Source of Fund: source of fund
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.tableRow}>
+          <View
+            style={[
+              styles.tableCell,
+              {
+                height: 20,
+                width: 100,
+                borderRightWidth: 0,
+                borderBottomWidth: 0,
+              },
+            ]}
+          ></View>
+
+          <View
+            style={[
+              styles.tableCell,
+              { height: 20, borderRightWidth: 0, borderBottomWidth: 0 },
+            ]}
+          >
+            <Text style={[styles.text, { textAlign: "center" }]}>
+              Requested by:
+            </Text>
+          </View>
+
+          <View
+            style={[
+              styles.tableCell,
+              { height: 20, borderRightWidth: 0, borderBottomWidth: 0 },
+            ]}
+          >
+            <Text style={[styles.text, { textAlign: "center" }]}>
+              Recommending approval:
+            </Text>
+          </View>
+
+          <View
+            style={[
+              styles.tableCell,
+              { height: 20, borderRightWidth: 0, borderBottomWidth: 0 },
+            ]}
+          >
+            <Text style={[styles.text, { textAlign: "center" }]}>
+              Approved by:
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.tableRow}>
+          <View
+            style={[
+              styles.tableCell,
+              { height: 50, width: 100, borderRightWidth: 0 },
+            ]}
+          >
+            <Text style={[styles.text, { textAlign: "left" }]}>Signature:</Text>
+            <Text style={[styles.text, { textAlign: "left" }]}>
+              Printed Name:
+            </Text>
+            <Text style={[styles.text, { textAlign: "left" }]}>
+              Designation:
+            </Text>
+          </View>
+
+          <View style={[styles.tableCell, { height: 50, borderRightWidth: 0 }]}>
+            <Text style={[styles.text, { textAlign: "center", marginTop: 15 }]}>
+              requested by
+            </Text>
+            <Text style={[styles.text, { textAlign: "center" }]}>
+              designation
+            </Text>
+          </View>
+
+          <View style={[styles.tableCell, { height: 50, borderRightWidth: 0 }]}>
+            <Text style={[styles.text, { textAlign: "center", marginTop: 15 }]}>
+             recommending
+            </Text>
+            <Text style={[styles.text, { textAlign: "center" }]}>
+             designation
+            </Text>
+          </View>
+
+          <View style={[styles.tableCell, { height: 50, borderRightWidth: 0 }]}>
+            <Text style={[styles.text, { textAlign: "center", marginTop: 15 }]}>
+             approved
+            </Text>
+            <Text style={[styles.text, { textAlign: "center" }]}>
+              designation
+            </Text>
+          </View>
+        </View>
+      </View>
+    </Page>
+  </Document>
+);
+
+Font.register({
+  family: 'Oswald',
+  src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf'
+});
+
+const styles = StyleSheet.create({
+  body: {
+    paddingTop: 35,
+    paddingBottom: 65,
+    paddingHorizontal: 35,
+  },
+  text: {
+    fontSize: 8,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    margin: 2,
+  },
+  header: {
+    fontWeight: 700,
+    fontSize: 10,
+    marginBottom: 10,
+    textAlign: "center",
+    color: "black",
+    fontFamily: "Times-Roman",
+  },
+  pageNumber: {
+    position: "absolute",
+    fontSize: 8,
+    bottom: 30,
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    color: "grey",
+  },
+
+  containerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  columnContainer: {
+    flexDirection: "column",
+    width: 280,
+  },
+
+  table: {
+    display: "table",
+    width: "auto",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 0,
+  },
+  tableRow: {
+    flexDirection: "row",
+  },
+  tableHeader: {
+    width: 200,
+    padding: 2,
+    height: 20,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    fontFamily: "Times-Roman",
+    fontSize: 10,
+  },
+  tableCell: {
+    width: 200,
+    padding: 2,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    fontFamily: "Times-Roman",
+    fontSize: 10,
+  },
+  purpose: {
+    width: 1000,
+  },
+});
+
+ReactPDF.render(<Quixote />);
